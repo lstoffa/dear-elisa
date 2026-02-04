@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dear Elisa</title>
@@ -61,53 +63,32 @@
     .no{background:transparent;color:var(--green);border:1.5px solid var(--green)}
     .letter{text-align:left}
     .letter p{max-width:70ch;margin:1.2rem auto}
-    .gallery{
+    .polaroids{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
       gap:1.2rem;
       margin-top:2.2rem
     }
-    .photo{
-      background:#0e1b16;
-      border-radius:16px;
+    .polaroid{
+      background:linear-gradient(180deg,#0e1b16,#0b1411);
+      border-radius:18px;
+      padding:0;
       overflow:hidden;
-      box-shadow:0 12px 26px rgba(0,0,0,.35)
+      box-shadow:0 18px 40px rgba(0,0,0,.45)
     }
-    .photo img{
+    .polaroid img{
       width:100%;
-      height:100%;
+      aspect-ratio:3/4;
       object-fit:cover;
       display:block
     }
-    .caption{
-      padding:.6rem;
-      font-size:.85rem;
-      color:var(--muted);
-      text-align:center
+    .polaroid span{
+      display:block;
+      padding:.8rem;
+      font-size:.8rem;
+      text-align:center;
+      color:var(--muted)
     }
-    footer{margin-top:2.4rem;color:var(--muted);text-align:center}
-    .music{
-      position:fixed;bottom:1rem;right:1rem;
-      background:var(--card);padding:.6rem 1rem;border-radius:999px;
-      box-shadow:0 10px 22px rgba(0,0,0,.45);
-      font-size:.85rem;cursor:pointer;display:none
-    }
-    .fade{opacity:0;transform:translateY(14px);transition:opacity 1.2s ease, transform 1.2s ease}
-    .fade.show{opacity:1;transform:none}
-    .lightbox{
-      position:fixed;inset:0;z-index:999;
-      background:rgba(0,0,0,.85);
-      display:none;align-items:center;justify-content:center;
-      padding:1rem
-    }
-    .lightbox img{
-      max-width:95%;max-height:95%;border-radius:18px
-    }
-    .lightbox.active{display:flex}
-    .polaroids{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.6rem;margin-top:2.4rem}
-    .polaroid{background:linear-gradient(180deg,#0e1b16,#0b1411);border-radius:18px;padding:0;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.45)}
-    .polaroid img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
-    .polaroid span{display:block;padding:.8rem;font-size:.8rem;text-align:center;color:var(--muted)}
     .final-title{
       margin-top:2.6rem;
       font-size:clamp(2.2rem,5vw,3.6rem);
@@ -115,9 +96,19 @@
       color:var(--green);
       font-weight:600
     }
+    .fade{opacity:0;transform:translateY(14px);transition:opacity 1.2s ease, transform 1.2s ease}
+    .fade.show{opacity:1;transform:none}
+    .music{
+      position:fixed;bottom:1rem;right:1rem;
+      background:var(--card);padding:.6rem 1rem;border-radius:999px;
+      box-shadow:0 10px 22px rgba(0,0,0,.45);
+      font-size:.85rem;cursor:pointer;display:none
+    }
   </style>
 </head>
 <body>
+
+<!-- Lock Page -->
 <div id="lock" style="position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#050a08,#0b1411);">
   <div style="background:#111f1a;padding:2.5rem 2rem;border-radius:24px;max-width:420px;width:100%;text-align:center;box-shadow:0 30px 60px rgba(0,0,0,.6)">
     <h2 style="color:#3fa37c;margin-top:0">For Elisa</h2>
@@ -126,14 +117,20 @@
     <button onclick="unlock()" style="margin-top:1.5rem;padding:.8rem 1.6rem;border-radius:999px;border:none;background:#3fa37c;color:#06130f;font-size:1rem;cursor:pointer">Enter</button>
     <p id="error" style="color:#c77;margin-top:1rem;display:none;font-size:.85rem">That’s not quite it.</p>
   </div>
-</div><section class="page active" id="p1">
+</div>
+
+<!-- PAGE 1 -->
+<section class="page active" id="p1">
   <div class="card fade">
     <h1>Dear Elisa</h1>
     <p class="muted">Like opening the first page of a book.</p>
     <p>Some things are meant to be opened gently. This is one of them.</p>
     <div class="link" onclick="goTo(2)">Click here to open</div>
   </div>
-</section><section class="page" id="p2">
+</section>
+
+<!-- PAGE 2 -->
+<section class="page" id="p2">
   <div class="card fade">
     <h2>Will you be my Valentine?</h2>
     <div class="actions">
@@ -141,8 +138,11 @@
       <button class="no" id="noBtn" onclick="softNo()">No</button>
     </div>
   </div>
-</section><section class="page" id="p3">
-  <div class="card letter">
+</section>
+
+<!-- PAGE 3 -->
+<section class="page" id="p3">
+  <div class="card letter fade">
     <h2>For You</h2>
     <p>
       Thank you for being in my life — for your presence, your kindness, and the
@@ -158,22 +158,28 @@
     </p>
     <div class="link" onclick="goTo(4)">Click here for the next page</div>
   </div>
-</section><section class="page" id="p4" style="background:linear-gradient(rgba(11,20,17,.85),rgba(11,20,17,.85)), url('images/memories-bg.jpg') center/cover no-repeat;">
+</section>
+
+<!-- PAGE 4 (Memories) -->
+<section class="page" id="p4" style="background:linear-gradient(rgba(11,20,17,.85), rgba(11,20,17,.85)), url('memoriesbg.jpg') center/cover no-repeat;">
   <div class="card fade">
     <h2>Memories</h2>
     <p class="muted">Moments worth keeping.</p>
     <div class="polaroids">
-      <div class="polaroid"><img src="images/photo1.jpg"><span>A moment I cherish</span></div>
-      <div class="polaroid"><img src="images/photo2.jpg"><span>A quiet smile</span></div>
-      <div class="polaroid"><img src="images/photo3.jpg"><span>Something unforgettable</span></div>
-      <div class="polaroid"><img src="images/photo4.jpg"><span>Always remembered</span></div>
+      <div class="polaroid"><img src="photo1.jpg"><span>A moment I cherish</span></div>
+      <div class="polaroid"><img src="photo2.jpg"><span>A quiet smile</span></div>
+      <div class="polaroid"><img src="photo3.jpg"><span>Something unforgettable</span></div>
+      <div class="polaroid"><img src="photo4.jpg"><span>Always remembered</span></div>
     </div>
     <footer class="fade" style="margin-top:3rem;text-align:center">
-      Lots of love,<br>Lois
+      Lots of love,<br><strong>Lois</strong>
     </footer>
     <div class="link fade" onclick="goTo(5)">One last page</div>
   </div>
-</section><section class="page" id="p5">
+</section>
+
+<!-- PAGE 5 (Final Message) -->
+<section class="page" id="p5">
   <div class="card fade letter" style="text-align:center">
     <h2>One Last Thing</h2>
     <p id="hiddenMsg" class="fade" style="max-width:60ch;margin:1.2rem auto">
@@ -181,9 +187,15 @@
     </p>
     <h1 class="final-title fade">Happy Valentine’s Day, my love</h1>
   </div>
-</section><audio id="music" loop>
+</section>
+
+<!-- Music -->
+<audio id="music" loop>
   <source src="mmusic.mp3" type="audio/mpeg">
-</audio><script>
+</audio>
+<div class="music" id="musicToggle" onclick="toggleMusic()">Music: on</div>
+
+<script>
   function goTo(n){ location.hash = 'p' + n }
 
   function softNo(){
@@ -201,6 +213,8 @@
 
     if(id === 'p4'){
       const m = document.getElementById('music')
+      const t = document.getElementById('musicToggle')
+      t.style.display = 'block'
       m.volume = 0.35
       m.play().catch(()=>{})
     }
@@ -208,30 +222,7 @@
   })
 
   if(location.hash){ window.dispatchEvent(new Event('hashchange')) }
-  function revealMessage(){
-    const m=document.getElementById('hiddenMsg')
-    m.style.display='block'
-    setTimeout(()=>m.classList.add('show'),50)
-  }
 
-  document.querySelectorAll('.photo img').forEach(img=>{
-    img.addEventListener('click',()=>{
-      const lb=document.getElementById('lightbox')
-      lb.querySelector('img').src=img.src
-      lb.classList.add('active')
-    })
-  })
-
-  document.addEventListener('click',e=>{
-    const lb=document.getElementById('lightbox')
-    if(lb.classList.contains('active') && e.target===lb){lb.classList.remove('active')}
-  })
-
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show') })
-  },{threshold:.15})
-
-  document.querySelectorAll('.fade').forEach(el=>observer.observe(el))
   function unlock(){
     const correct = '3/02/26'
     const input = document.getElementById('pass').value
@@ -241,5 +232,19 @@
       document.getElementById('error').style.display='block'
     }
   }
-</script><div class="lightbox" id="lightbox"><img src="" alt=""></div></body>
+
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show') })
+  },{threshold:.15})
+  document.querySelectorAll('.fade').forEach(el=>observer.observe(el))
+
+  function toggleMusic(){
+    const m=document.getElementById('music')
+    const t=document.getElementById('musicToggle')
+    if(m.paused){m.play();t.textContent='Music: on'}
+    else{m.pause();t.textContent='Music: off'}
+  }
+</script>
+
+</body>
 </html>
